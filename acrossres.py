@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import hashlib
 
 from construct import Adapter, Const, GreedyBytes, Int32ul, Struct, this
 
@@ -84,5 +85,9 @@ def pack_res(dir_path, file_path):
         f.write(ResourceFile.build(res_content))
 
 
-unpack_res("across.res","unzipped")
-pack_res("zip","across_NEW.res")
+for file in os.listdir('res/'):
+    if file.endswith('.RES'):
+        print(file)
+        print(hashlib.md5(open('res/' + file, 'rb').read()).hexdigest())
+        unpack_res('res/' + file, 'unzipped/' + file[:-4])
+#pack_res("zip","across_NEW.res")
